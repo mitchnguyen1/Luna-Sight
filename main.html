@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Luna Sight | See Your Day Clearly</title>
+  <style>
+    :root {
+      --luna-navy: #060A3D;
+      --luna-blue: #2563EB;
+      --moon-white: #F8FAFC;
+      --accent-teal: #2DD4BF;
+      --soft-blue: #EAF2FF;
+      --card-border: #D9E4F5;
+      --muted-text: #5C668A;
+      --shadow: 0 18px 45px rgba(6, 10, 61, 0.12);
+      --radius-lg: 28px;
+      --radius-md: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Inter, Poppins, Avenir, Aptos, Montserrat, Arial, sans-serif;
+      background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.12), transparent 35%),
+                  linear-gradient(180deg, #ffffff 0%, var(--moon-white) 55%, #eef7ff 100%);
+      color: var(--luna-navy);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page-shell {
+      width: min(1180px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(16px);
+      background: rgba(248, 250, 252, 0.78);
+      border-bottom: 1px solid rgba(217, 228, 245, 0.8);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 1.45rem;
+      letter-spacing: -0.04em;
+    }
+
+    .logo-mark {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 65% 35%, #1c3fa3 0%, var(--luna-navy) 55%, var(--luna-blue) 100%);
+      display: grid;
+      place-items: center;
+      color: white;
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.28);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo-mark::before {
+      content: "";
+      width: 22px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--moon-white);
+      position: absolute;
+      left: 9px;
+      top: 7px;
+      box-shadow: 8px 0 0 rgba(6, 10, 61, 0.1);
+    }
+
+    .logo-mark::after {
+      content: "⌂";
+      position: absolute;
+      font-size: 1.3rem;
+      font-weight: 700;
+      right: 10px;
+      bottom: 8px;
+      color: var(--moon-white);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      font-weight: 700;
+      color: var(--muted-text);
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover {
+      color: var(--luna-blue);
+    }
+
+    .nav-button,
+    .primary-button,
+    .secondary-button {
+      border: none;
+      border-radius: 999px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .nav-button {
+      background: var(--luna-navy);
+      color: white;
+      padding: 11px 18px;
+    }
+
+    .primary-button {
+      background: linear-gradient(135deg, var(--luna-blue), var(--accent-teal));
+      color: white;
+      padding: 16px 24px;
+      box-shadow: 0 16px 30px rgba(37, 99, 235, 0.28);
+    }
+
+    .secondary-button {
+      background: rgba(255,255,255,0.78);
+      color: var(--luna-navy);
+      padding: 15px 22px;
+      border: 1px solid var(--card-border);
+    }
+
+    .nav-button:hover,
+    .primary-button:hover,
+    .secondary-button:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      padding: 82px 0 58px;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 46px;
+      align-items: center;
+      min-height: 720px;
+    }
+
+    .eyebrow {
+      color: var(--luna-blue);
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.82rem;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(3.1rem, 7vw, 6.7rem);
+      line-height: 0.92;
+      letter-spacing: -0.08em;
+      margin-bottom: 24px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, var(--luna-navy), var(--luna-blue), var(--accent-teal));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subheading {
+      font-size: clamp(1.08rem, 2vw, 1.35rem);
+      color: var(--muted-text);
+      max-width: 650px;
+      margin-bottom: 30px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 30px;
+    }
+
+    .trust-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .pill {
+      border: 1px solid var(--card-border);
+      background: rgba(255, 255, 255, 0.72);
+      border-radius: 999px;
+      padding: 9px 13px;
+      font-weight: 800;
+      font-size: 0.9rem;
+      color: var(--luna-navy);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 560px;
+      display: grid;
+      place-items: center;
+    }
+
+    .orb {
+      position: absolute;
+      width: 440px;
+      height: 440px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 25%, rgba(255,255,255,0.9), rgba(37,99,235,0.38) 42%, rgba(6,10,61,0.95) 100%);
+      box-shadow: 0 32px 80px rgba(6, 10, 61, 0.28);
+      overflow: hidden;
+    }
+
+    .orb::before {
+      content: "";
+      position: absolute;
+      width: 230px;
+      height: 310px;
+      border-radius: 50%;
+      background: var(--moon-white);
+      left: 78px;
+      top: 48px;
+      box-shadow: 62px -8px 0 rgba(6, 10, 61, 0.18);
+    }
+
+    .orb::after {
+      content: "✦";
+      position: absolute;
+      color: white;
+      right: 102px;
+      top: 86px;
+      font-size: 2.1rem;
+    }
+
+    .hub-card {
+      position: relative;
+      z-index: 3;
+      width: min(420px, 92%);
+      margin-top: 118px;
+      background: rgba(255, 255, 255, 0.86);
+      border: 1px solid rgba(217, 228, 245, 0.95);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      padding: 26px;
+      backdrop-filter: blur(18px);
+    }
+
+    .home-illustration {
+      height: 190px;
+      border-radius: 24px;
+      background: linear-gradient(145deg, rgba(248,250,252,0.95), rgba(218,232,255,0.9));
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .home-illustration::before {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 130px;
+      right: 22px;
+      bottom: 24px;
+      background: rgba(255,255,255,0.85);
+      clip-path: polygon(0 40%, 45% 0, 100% 40%, 100% 100%, 0 100%);
+      border: 1px solid rgba(37,99,235,0.14);
+    }
+
+    .home-illustration::after {
+      content: "";
+      position: absolute;
+      width: 70px;
+      height: 92px;
+      left: 58px;
+      bottom: 26px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, #fdfefe, #dcecff);
+      box-shadow: inset 0 0 0 2px rgba(37,99,235,0.08);
+    }
+
+    .mini-hub {
+      position: absolute;
+      width: 64px;
+      height: 86px;
+      left: 60px;
+      bottom: 46px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, #8bb9ff, var(--luna-blue));
+      display: grid;
+      place-items: center;
+      color: white;
+      font-size: 1.45rem;
+      font-weight: 800;
+      box-shadow: 0 12px 22px rgba(37,99,235,0.28);
+    }
+
+    .status-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .status-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: var(--moon-white);
+      border: 1px solid var(--card-border);
+      font-weight: 800;
+      color: var(--luna-navy);
+      font-size: 0.92rem;
+    }
+
+    .status-item span:last-child {
+      color: var(--luna-blue);
+    }
+
+    section {
+      padding: 74px 0;
+    }
+
+    .section-heading {
+      max-width: 760px;
+      margin-bottom: 32px;
+    }
+
+    .section-label {
+      color: var(--luna-blue);
+      font-weight: 900;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 4vw, 3.3rem);
+      line-height: 1.05;
+      letter-spacing: -0.06em;
+      margin-bottom: 16px;
+    }
+
+    .section-heading p,
+    .wide-card p,
+    .feature-card p,
+    .privacy-card p,
+    .cta-card p {
+      color: var(--muted-text);
+      font-size: 1.02rem;
+    }
+
+    .problem-solution-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .wide-card {
+      background: rgba(255,255,255,0.82);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 34px;
+      box-shadow: 0 14px 38px rgba(6, 10, 61, 0.08);
+      min-height: 280px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wide-card::after {
+      content: "";
+      position: absolute;
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(45, 212, 191, 0.25), transparent 70%);
+      right: -70px;
+      bottom: -70px;
+    }
+
+    .icon-bubble {
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, var(--luna-blue), var(--accent-teal));
+      color: white;
+      display: grid;
+      place-items: center;
+      font-size: 1.6rem;
+      margin-bottom: 20px;
+      box-shadow: 0 15px 25px rgba(37,99,235,0.2);
+    }
+
+    .wide-card h3,
+    .feature-card h3,
+    .privacy-card h3 {
+      font-size: 1.35rem;
+      margin-bottom: 10px;
+      letter-spacing: -0.03em;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .feature-card {
+      background: rgba(255,255,255,0.9);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: 0 12px 28px rgba(6, 10, 61, 0.07);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(37,99,235,0.45);
+    }
+
+    .feature-icon {
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+    }
+
+    .privacy-section {
+      background: linear-gradient(135deg, var(--luna-navy), #10267d 55%, #0a9fb4 100%);
+      color: white;
+      border-radius: 38px;
+      padding: 64px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 24px 70px rgba(6, 10, 61, 0.28);
+    }
+
+    .privacy-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.75) 1px, transparent 1.5px);
+      background-size: 38px 38px;
+      opacity: 0.18;
+    }
+
+    .privacy-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .privacy-content .section-label,
+    .privacy-content h2,
+    .privacy-content p {
+      color: white;
+    }
+
+    .privacy-content .section-heading p {
+      color: rgba(255,255,255,0.76);
+    }
+
+    .privacy-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .privacy-card {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 22px;
+      padding: 22px;
+      backdrop-filter: blur(14px);
+    }
+
+    .privacy-card p {
+      color: rgba(255,255,255,0.74);
+    }
+
+    .cta-card {
+      text-align: center;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid var(--card-border);
+      border-radius: 38px;
+      padding: 72px 32px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-card::before {
+      content: "";
+      position: absolute;
+      width: 380px;
+      height: 380px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(37,99,235,0.16), transparent 70%);
+      top: -170px;
+      left: -120px;
+    }
+
+    .cta-card::after {
+      content: "";
+      position: absolute;
+      width: 380px;
+      height: 380px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(45,212,191,0.22), transparent 70%);
+      right: -150px;
+      bottom: -170px;
+    }
+
+    .cta-card > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    .cta-card p {
+      max-width: 670px;
+      margin: 0 auto 28px;
+      font-size: 1.08rem;
+    }
+
+    .cta-actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    footer {
+      padding: 34px 0;
+      color: var(--muted-text);
+      text-align: center;
+      font-weight: 700;
+    }
+
+    @media (max-width: 960px) {
+      .hero,
+      .problem-solution-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: 54px;
+      }
+
+      .hero-visual {
+        min-height: 500px;
+      }
+
+      .features-grid,
+      .privacy-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .privacy-section {
+        padding: 44px 26px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .page-shell {
+        width: min(100% - 24px, 1180px);
+      }
+
+      .features-grid,
+      .privacy-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-actions,
+      .cta-actions {
+        flex-direction: column;
+      }
+
+      .primary-button,
+      .secondary-button {
+        width: 100%;
+      }
+
+      .orb {
+        width: 330px;
+        height: 330px;
+      }
+
+      .hub-card {
+        margin-top: 92px;
+      }
+
+      .wide-card,
+      .cta-card {
+        padding: 28px 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="page-shell nav">
+      <a href="#top" class="brand" aria-label="Luna Sight home">
+        <span class="logo-mark" aria-hidden="true"></span>
+        <span>Luna Sight</span>
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#problem">Problem</a>
+        <a href="#solution">Solution</a>
+        <a href="#features">Features</a>
+        <a href="#privacy">Privacy</a>
+      </nav>
+      <a class="nav-button" href="#cta">Join Waitlist</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="page-shell hero">
+      <div>
+        <p class="eyebrow">Smart home AI concierge</p>
+        <h1>Luna Sight<br><span class="gradient-text">See your day clearly.</span></h1>
+        <p class="hero-subheading">
+          A physical AI home hub and mobile app that helps manage daily tasks, smart home systems, calls, meetings, reminders, and life planning.
+        </p>
+        <div class="hero-actions">
+          <a class="primary-button" href="#cta">Join the waitlist</a>
+          <a class="secondary-button" href="#features">See how Luna Sight works</a>
+        </div>
+        <div class="trust-row" aria-label="Brand personality">
+          <span class="pill">✦ Smart</span>
+          <span class="pill">☾ Calm</span>
+          <span class="pill">♥ Helpful</span>
+          <span class="pill">🛡 Trustworthy</span>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-label="Luna Sight home hub visual">
+        <div class="orb"></div>
+        <div class="hub-card">
+          <div class="home-illustration">
+            <div class="mini-hub">⌂</div>
+          </div>
+          <div class="status-list">
+            <div class="status-item"><span>Morning briefing</span><span>Ready</span></div>
+            <div class="status-item"><span>Home systems</span><span>Synced</span></div>
+            <div class="status-item"><span>Appointments</span><span>Approved</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="problem" class="page-shell">
+      <div class="section-heading">
+        <span class="section-label">The problem</span>
+        <h2>Daily life is split across too many places.</h2>
+        <p>People are juggling calendars, smart devices, reminders, emails, grocery lists, security alerts, calls, meetings, and family plans all at once.</p>
+      </div>
+      <div class="problem-solution-grid">
+        <article class="wide-card">
+          <div class="icon-bubble">!</div>
+          <h3>Too much to track</h3>
+          <p>Too many apps, reminders, devices, and responsibilities make it easy to miss important details or waste time switching between tools.</p>
+        </article>
+        <article id="solution" class="wide-card">
+          <div class="icon-bubble">⌂</div>
+          <h3>One calm system</h3>
+          <p>One home hub and app organize daily life and complete routine tasks with user approval, so users stay informed without feeling overwhelmed.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="features" class="page-shell">
+      <div class="section-heading">
+        <span class="section-label">Features</span>
+        <h2>Designed to handle the small tasks that pile up.</h2>
+        <p>Luna Sight connects everyday planning, home awareness, and helpful automation into one clear experience.</p>
+      </div>
+      <div class="features-grid">
+        <article class="feature-card">
+          <div class="feature-icon">☀️</div>
+          <h3>Daily Briefing</h3>
+          <p>Summarizes appointments, tasks, weather, reminders, and home updates in one clear view.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">☎️</div>
+          <h3>Appointment Calls</h3>
+          <p>Helps call, reschedule, confirm, or follow up on appointments with user approval.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">📝</div>
+          <h3>Meeting Notes</h3>
+          <p>Organizes meeting details, action items, reminders, and next steps for work or home.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Energy Savings</h3>
+          <p>Suggests smart adjustments for lights, thermostat settings, and energy-heavy routines.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">🎥</div>
+          <h3>Camera Search</h3>
+          <p>Searches approved home camera history for helpful context, events, or expected visitors.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">🛒</div>
+          <h3>Inventory Tracking</h3>
+          <p>Tracks household basics, grocery needs, and low-stock items before they become urgent.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">✈️</div>
+          <h3>Travel Planning</h3>
+          <p>Helps organize trips, bookings, packing lists, reservations, and reminders.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">🎉</div>
+          <h3>Event Planning</h3>
+          <p>Keeps timelines, vendors, guest tasks, and event details in one simple planning flow.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="privacy" class="page-shell">
+      <div class="privacy-section">
+        <div class="privacy-content">
+          <div class="section-heading">
+            <span class="section-label">Privacy first</span>
+            <h2>Helpful AI should feel safe, clear, and controlled.</h2>
+            <p>Luna Sight is designed around permission-based access, user approvals, and control settings so the assistant only acts when it is allowed to.</p>
+          </div>
+          <div class="privacy-grid">
+            <article class="privacy-card">
+              <h3>Local Storage</h3>
+              <p>Keeps sensitive home data closer to the user whenever possible.</p>
+            </article>
+            <article class="privacy-card">
+              <h3>Permission Access</h3>
+              <p>Apps, calendars, cameras, and devices connect only when approved.</p>
+            </article>
+            <article class="privacy-card">
+              <h3>User Approval</h3>
+              <p>Sensitive actions like ordering, calling, or changing settings require confirmation.</p>
+            </article>
+            <article class="privacy-card">
+              <h3>Control Settings</h3>
+              <p>Users can manage what Luna Sight can see, suggest, and complete.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="cta" class="page-shell">
+      <div class="cta-card">
+        <span class="section-label">Ready for a clearer day?</span>
+        <h2>Let Luna Sight handle the daily chaos.</h2>
+        <p>Join the waitlist, request a demo, or explore how a calm AI home hub can help organize your home, schedule, and routines.</p>
+        <div class="cta-actions">
+          <a class="primary-button" href="mailto:hello@lunasight.ai?subject=Luna%20Sight%20Waitlist">Join the waitlist</a>
+          <a class="secondary-button" href="mailto:hello@lunasight.ai?subject=Request%20a%20Luna%20Sight%20Demo">Request a demo</a>
+          <a class="secondary-button" href="#features">See how Luna Sight works</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="page-shell">
+      <p>© 2026 Luna Sight. Your home, handled.</p>
+    </div>
+  </footer>
+</body>
+</html>
